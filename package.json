@@ -1,0 +1,19 @@
+{
+  "name": "@epiccoolguy/rbac-authorization",
+  "version": "0.0.1",
+  "description": "A brief description of the project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epiccoolguy/ts-rbac-authorization.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/epiccoolguy/ts-rbac-authorization/issues"
+  },
+  "homepage": "https://github.com/epiccoolguy/ts-rbac-authorization#readme"
+}
