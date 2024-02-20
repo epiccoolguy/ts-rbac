@@ -1,5 +1,5 @@
 {
-  "name": "@epiccoolguy/rbac-authorization",
+  "name": "@epiccoolguy/rbac",
   "version": "0.0.1",
   "description": "A brief description of the project.",
   "main": "dist/index.js",
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/epiccoolguy/ts-rbac-authorization.git"
+    "url": "git+https://github.com/epiccoolguy/ts-rbac.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/epiccoolguy/ts-rbac-authorization/issues"
+    "url": "https://github.com/epiccoolguy/ts-rbac/issues"
   },
-  "homepage": "https://github.com/epiccoolguy/ts-rbac-authorization#readme",
+  "homepage": "https://github.com/epiccoolguy/ts-rbac#readme",
   "devDependencies": {
     "@babel/core": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
