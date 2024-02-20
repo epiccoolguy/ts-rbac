@@ -2,9 +2,15 @@
   "name": "@epiccoolguy/rbac-authorization",
   "version": "0.0.1",
   "description": "A brief description of the project.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "jest"
+    "build": "tsc",
+    "test": "jest",
+    "prepack": "npm run build"
   },
   "repository": {
     "type": "git",
