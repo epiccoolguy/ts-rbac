@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeEach } from "@jest/globals";
 
-import { createInMemoryRBAC } from "./memory";
-import { type RBAC, createRBAC } from "./rbac";
+import { createInMemoryRBAC } from "./memory.js";
+import { type RBAC, createRBAC } from "./rbac.js";
 
 const permissions = [
   "service.component.create",

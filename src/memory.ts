@@ -1,4 +1,4 @@
-import type { RBAC } from "./rbac";
+import type { RBAC } from "./rbac.js";
 
 export function createInMemoryRBAC<
   P extends string = string,
