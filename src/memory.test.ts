@@ -1,7 +1,7 @@
-import { describe, test, expect, beforeEach } from "@jest/globals";
+import { beforeEach, describe, expect, test } from "@jest/globals";
 
 import { createInMemoryRBAC } from "./memory.js";
-import { type RBAC, createRBAC } from "./rbac.js";
+import type { RBAC } from "./rbac.js";
 
 const permissions = [
   "service.component.create",
@@ -26,7 +26,7 @@ type Role = (typeof roles)[number];
 let rbac: RBAC<Permission, Role>;
 
 beforeEach(() => {
-  rbac = createRBAC(createInMemoryRBAC());
+  rbac = createInMemoryRBAC();
 });
 
 describe("permissions to roles", () => {
@@ -34,7 +34,7 @@ describe("permissions to roles", () => {
     const permission: Permission = "service.component.create";
     const role: Role = "roles/service.componentCreator";
 
-    await rbac.assignPermissionToRole(role, permission);
+    await rbac.assignPermissionToRole(permission, role);
 
     const hasPermission = await rbac.roleHasPermission(role, permission);
     expect(hasPermission).toBe(true);
@@ -44,8 +44,8 @@ describe("permissions to roles", () => {
     const permission: Permission = "service.component.create";
     const role: Role = "roles/service.componentCreator";
 
-    await rbac.assignPermissionToRole(role, permission);
-    await rbac.removePermissionFromRole(role, permission);
+    await rbac.assignPermissionToRole(permission, role);
+    await rbac.removePermissionFromRole(permission, role);
 
     const hasPermission = await rbac.roleHasPermission(role, permission);
     expect(hasPermission).toBe(false);
@@ -57,7 +57,7 @@ describe("subjects to roles", () => {
     const role: Role = "roles/service.componentCreator";
     const subject = "user:example@example.com";
 
-    await rbac.assignRoleToSubject(subject, role);
+    await rbac.assignRoleToSubject(role, subject);
 
     const hasRole = await rbac.subjectHasRole(subject, role);
     expect(hasRole).toBe(true);
@@ -67,8 +67,8 @@ describe("subjects to roles", () => {
     const role: Role = "roles/service.componentCreator";
     const subject = "user:example@example.com";
 
-    await rbac.assignRoleToSubject(subject, role);
-    await rbac.removeRoleFromSubject(subject, role);
+    await rbac.assignRoleToSubject(role, subject);
+    await rbac.removeRoleFromSubject(role, subject);
 
     const hasRole = await rbac.subjectHasRole(subject, role);
     expect(hasRole).toBe(false);
@@ -81,8 +81,8 @@ describe("subjects to permissions", () => {
     const role = "roles/service.componentAdmin";
     const subject = "user:example@example.com";
 
-    await rbac.assignPermissionToRole(role, permission);
-    await rbac.assignRoleToSubject(subject, role);
+    await rbac.assignPermissionToRole(permission, role);
+    await rbac.assignRoleToSubject(role, subject);
 
     const hasPermission = await rbac.subjectHasPermission(subject, permission);
     expect(hasPermission).toBe(true);
@@ -93,9 +93,9 @@ describe("subjects to permissions", () => {
     const role = "roles/service.componentAdmin";
     const subject = "user:example@example.com";
 
-    await rbac.assignPermissionToRole(role, permission);
-    await rbac.assignRoleToSubject(subject, role);
-    await rbac.removeRoleFromSubject(subject, role);
+    await rbac.assignPermissionToRole(permission, role);
+    await rbac.assignRoleToSubject(role, subject);
+    await rbac.removeRoleFromSubject(role, subject);
 
     const hasPermission = await rbac.subjectHasPermission(subject, permission);
     expect(hasPermission).toBe(false);
@@ -106,9 +106,9 @@ describe("subjects to permissions", () => {
     const role = "roles/service.componentAdmin";
     const subject = "user:example@example.com";
 
-    await rbac.assignPermissionToRole(role, permission);
-    await rbac.assignRoleToSubject(subject, role);
-    await rbac.removePermissionFromRole(role, permission);
+    await rbac.assignPermissionToRole(permission, role);
+    await rbac.assignRoleToSubject(role, subject);
+    await rbac.removePermissionFromRole(permission, role);
 
     const hasPermission = await rbac.subjectHasPermission(subject, permission);
     expect(hasPermission).toBe(false);

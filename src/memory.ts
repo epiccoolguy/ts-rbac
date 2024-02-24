@@ -2,13 +2,14 @@ import type { RBAC } from "./rbac.js";
 
 export function createInMemoryRBAC<
   P extends string = string,
-  R extends string = string
->(): RBAC<P, R> {
+  R extends string = string,
+  S extends string = string
+>(): RBAC<P, R, S> {
   const rolePermissions = new Map<R, Set<P>>();
   const subjectRoles = new Map<string, Set<R>>();
 
   return {
-    async assignPermissionToRole(role: R, permission: P): Promise<void> {
+    async assignPermissionToRole(permission: P, role: R): Promise<void> {
       if (!rolePermissions.has(role)) {
         rolePermissions.set(role, new Set<P>());
       }
@@ -16,7 +17,7 @@ export function createInMemoryRBAC<
       rolePermissions.get(role)?.add(permission);
     },
 
-    async removePermissionFromRole(role: R, permission: P): Promise<void> {
+    async removePermissionFromRole(permission: P, role: R): Promise<void> {
       rolePermissions.get(role)?.delete(permission);
     },
 
@@ -24,7 +25,7 @@ export function createInMemoryRBAC<
       return rolePermissions.get(role)?.has(permission) ?? false;
     },
 
-    async assignRoleToSubject(subject: string, role: R): Promise<void> {
+    async assignRoleToSubject(role: R, subject: S): Promise<void> {
       if (!subjectRoles.has(subject)) {
         subjectRoles.set(subject, new Set<R>());
       }
@@ -32,18 +33,15 @@ export function createInMemoryRBAC<
       subjectRoles.get(subject)?.add(role);
     },
 
-    async removeRoleFromSubject(subject: string, role: R): Promise<void> {
+    async removeRoleFromSubject(role: R, subject: S): Promise<void> {
       subjectRoles.get(subject)?.delete(role);
     },
 
-    async subjectHasRole(subject: string, role: R): Promise<boolean> {
+    async subjectHasRole(subject: S, role: R): Promise<boolean> {
       return subjectRoles.get(subject)?.has(role) ?? false;
     },
 
-    async subjectHasPermission(
-      subject: string,
-      permission: P
-    ): Promise<boolean> {
+    async subjectHasPermission(subject: S, permission: P): Promise<boolean> {
       for (const role of subjectRoles.get(subject) ?? new Set<R>()) {
         if (rolePermissions.get(role)?.has(permission)) {
           return true;
